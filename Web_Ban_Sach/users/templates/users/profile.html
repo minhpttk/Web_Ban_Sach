@@ -1,0 +1,30 @@
+{% comment %} {% extends "blog/base.html" %} {% endcomment %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="content-section">
+    <div class="media">
+      <img class="rounded-circle account-img" style="width: 80px; height: 80px" src="{{ user.profile.image.url }}">
+      <div class="media-body">
+        <h2 class="account-heading">{{ user.username }}</h2>
+        <p class="text-secondary">{{ user.email }}</p>
+      </div>
+    </div>
+    <!-- FORM HERE -->
+    <button type="button" class="btn btn-info"><a href="{% url 'create_post' %}">create my post</a></button>
+    <div>
+    {% for post in my_post %}
+    <article class="media content-section">
+        <div class="media-body">
+          <div class="article-metadata">
+            <a class="mr-2" href="#">{{ post.author }}</a>
+            <small class="text-muted">{{ post.date_posted | date:"F d, Y" }}</small>
+          </div>
+          <h2><a class="article-title" href="{% url 'blog-detail' post.pk %}">{{ post.title }}</a></h2>
+          <p class="article-content">{{ post.content|truncatechars:200 }}</p>
+          <img src="{{ post.image.url }}">
+        </div>
+      </article>
+    {% endfor %}
+    </div>
+  </div>
+{% endblock content %}
